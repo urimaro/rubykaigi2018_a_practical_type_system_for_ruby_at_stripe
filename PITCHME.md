@@ -271,6 +271,14 @@ static methodでinstance変数を参照していた
 左辺が常にtruthyだった場合、  
 右辺がdead codeになる
 
+```
+case transaction
+  ...
+  when Stripe::Charge || Stripe::Refund
+  ...
+end
+```
+
 ---
 
 ### Speed
@@ -330,7 +338,7 @@ CIだと10インスタンス使って10分
     - オーバーヘッド… |
     - アノテーション… |
 - もうちょっと詳しい運用方法が知りたかった |
-    実行時チェック、静的チェック… 
+    - 実行時チェック、静的チェック… 
 
 ---
 
@@ -340,5 +348,5 @@ CIだと10インスタンス使って10分
 
 ---
 
-## Crystal
+# Crystal
 

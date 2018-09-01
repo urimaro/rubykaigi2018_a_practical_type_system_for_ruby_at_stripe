@@ -181,7 +181,9 @@ create_charge(10_000, :jpy)
 ### チェックレベル指定可能
 
 - true: タイプチェックする
-- strict: タイプチェックし、インスタンス変数の宣言が必要
+- strict:  
+    タイプチェックする  
+    インスタンス変数の宣言も必要
 - strong: タイプを明記していないコードを呼べない
 
 ---
@@ -206,35 +208,63 @@ int_box = Box(Integer).new
 
 ---
 
-### code reviewをすり抜けて見つかったバグ - 1
+### code reviewをすり抜けて
+### 見つかったバグ - 1
 
 エラーハンドリングのtypo
 
-- NG: JSON::ParseError 
+- NG: JSON::ParseError
 - OK: JSON::ParserError
 
+```
+begin
+  data = JSON.parse(File.read(path))
+rescue JSON::ParseError => e
+  raise "#{PACKAGE_REL_PATH} contains invalid JSON: #{e}"
+end
+```
+
 ---
 
-### code reviewをすり抜けて見つかったバグ - 2
+### code reviewをすり抜けて
+### 見つかったバグ - 2
 
-エラーハンドリングした後、コンストラクタを使わず
-Pythonを使っていたので混同してしまい、メソッド呼び出しをした
+Pythonばかり書いていたので、  
+エラーハンドリングした後、  
+コンストラクタを使わず、  
+メソッド呼び出しをした
+
+```
+if look_ahead_days < 1 || look_ahead_days > 30
+  raise ArgumentError('look_ahead_days must be between [_]')
+end
+```
 
 ---
 
-### code reviewをすり抜けて見つかったバグ - 3
+### code reviewをすり抜けて
+### 見つかったバグ - 3
 
 nilを返す可能性があるのにnil checkをしていない箇所があった
 
+```
+app.post '/vi/webhook/:id/update' do
+  endpoint = WebhookEndpoint.load(params[:id])
+  update_webhook(endpoint, params)
+end
+```
+
 ---
 
-### code reviewをすり抜けて見つかったバグ - 4
+### code reviewをすり抜けて
+### 見つかったバグ - 4
 
 static methodでinstance変数を参照していた
 
 ---
 
-### code reviewをすり抜けて見つかったバグ - 5
+### code reviewをすり抜けて
+### 見つかったバグ - 5
 
 `||` 演算子の誤った使い方
 左辺が常にtruthyだった場合、右辺がdead codeになる

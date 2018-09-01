@@ -2,6 +2,8 @@
 
 Dmitry Petrashko, Paul Tarjan, Nelson Elhage
 
+---
+
 ### Summary
 
 - Stripe製Type Checkerの話
